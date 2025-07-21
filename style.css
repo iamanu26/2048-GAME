@@ -1,0 +1,161 @@
+/* --- CSS Variables --- */
+:root {
+  --grid-size: 4;
+  --cell-size: 20vmin; /* Use vmin to scale with the smaller viewport dimension */
+  --grid-gap: 2vmin;
+  --max-board-size: 500px; /* Cap the size on large screens */
+  --border-radius: 6px;
+  
+  /* Color Palette */
+  --bg-color: #faf8ef;
+  --text-color-primary: #776e65;
+  --text-color-light: #f9f6f2;
+  --board-bg: #bbada0;
+  --cell-bg: #ccc0b3;
+  --button-bg: #8f7a66;
+  --button-hover-bg: #9e8b77;
+
+  /* Tile Colors */
+  --tile-2-bg: #eee4da;
+  --tile-4-bg: #ede0c8;
+  --tile-8-bg: #f2b179;
+  --tile-16-bg: #f59563;
+  --tile-32-bg: #f67c5f;
+  --tile-64-bg: #f65e3b;
+  --tile-128-bg: #edcf72;
+  --tile-256-bg: #edcc61;
+  --tile-512-bg: #edc850;
+  --tile-1024-bg: #edc53f;
+  --tile-2048-bg: #edc22e;
+  --tile-large-bg: #3c3a32;
+}
+
+/* --- General Layout & Typography --- */
+body {
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color-primary);
+  margin: 0;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: var(--max-board-size);
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(3rem, 10vmin, 4rem); /* Responsive font size */
+  margin: 0.5em 0;
+}
+
+button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* --- Header & Controls --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-box {
+  background-color: var(--board-bg);
+  color: white;
+  padding: 5px 25px;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+#score-display {
+  font-size: 1.5rem;
+}
+
+.controls {
+  margin: 15px 0;
+}
+
+/* --- Game Board --- */
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+  grid-template-rows: repeat(var(--grid-size), var(--cell-size));
+  gap: var(--grid-gap);
+  padding: var(--grid-gap);
+  background-color: var(--board-bg);
+  border-radius: var(--border-radius);
+  position: relative; /* Required for positioning tiles */
+}
+
+/* --- Cells & Tiles --- */
+.cell {
+  background-color: var(--cell-bg);
+  border-radius: var(--border-radius);
+}
+
+.tile {
+  /* This is the key change: Tiles are now grid items */
+  grid-row-start: var(--row);
+  grid-column-start: var(--col);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-weight: bold;
+  border-radius: var(--border-radius);
+  font-size: clamp(1.5rem, 5vmin, 2.5rem);
+
+  /* Animation for new tiles appearing */
+  animation: appear 200ms ease;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- Tile Color Theming --- */
+.tile[data-value="2"]    { background-color: var(--tile-2-bg); color: var(--text-color-primary); }
+.tile[data-value="4"]    { background-color: var(--tile-4-bg); color: var(--text-color-primary); }
+.tile[data-value="8"]    { background-color: var(--tile-8-bg); color: var(--text-color-light); }
+.tile[data-value="16"]   { background-color: var(--tile-16-bg); color: var(--text-color-light); }
+.tile[data-value="32"]   { background-color: var(--tile-32-bg); color: var(--text-color-light); }
+.tile[data-value="64"]   { background-color: var(--tile-64-bg); color: var(--text-color-light); }
+.tile[data-value="128"]  { background-color: var(--tile-128-bg); color: var(--text-color-light); }
+.tile[data-value="256"]  { background-color: var(--tile-256-bg); color: var(--text-color-light); }
+.tile[data-value="512"]  { background-color: var(--tile-512-bg); color: var(--text-color-light); }
+.tile[data-value="1024"] { background-color: var(--tile-1024-bg); color: var(--text-color-light); }
+.tile[data-value="2048"] { background-color: var(--tile-2048-bg); color: var(--text-color-light); }
+.tile[data-value="4096"],
+.tile[data-value="8192"] { background-color: var(--tile-large-bg); color: var(--text-color-light); }
